@@ -1,0 +1,161 @@
+:root {
+    --bg-black: #020205;
+    --curse-pink: #ff0055;
+    --domain-blue: #00f3ff;
+    --gold: #ffcc00;
+    --arcade-gray: #111116;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-touch-callout: none; }
+
+body {
+    background-color: var(--bg-black);
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* RESPONSIVE LANDSCAPE ENFORCEMENT BANNER */
+#orientation-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-black);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.overlay-content { text-align: center; }
+.rotate-icon { display: block; font-size: 2.5rem; animation: spin 2s infinite linear; margin-bottom: 10px; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+#orientation-overlay p { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--curse-pink); letter-spacing: 2px; }
+
+@media (orientation: landscape) {
+    #orientation-overlay { display: none !important; }
+}
+
+/* GAMEPLAY DASHBOARD */
+#game-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; padding: 8px; }
+#game-hud { height: 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; border-bottom: 2px solid #222; }
+.label { font-size: 0.6rem; color: #555; font-family: 'Orbitron', sans-serif; display: block; }
+.value { font-size: 0.8rem; font-weight: bold; font-family: 'Orbitron', sans-serif; color: #fff; }
+    .combo-tracker { font-family: 'Permanent Marker', cursive; color: var(--gold); font-size: 0.9rem; }
+/* FIELD MANAGEMENT & ENVIRONMENTS */
+#battle-stage { flex: 1; position: relative; border: 2px solid #222; border-radius: 6px; margin: 6px 0; overflow: hidden; background-size: cover; background-position: center; transition: background 0.5s ease; }
+.arena-floor { position: absolute; bottom: 0; width: 100%; height: 35px; background: rgba(0,0,0,0.4); border-top: 3px solid var(--domain-blue); }
+
+/* Background Assignments */
+.bg-phase-1 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('tokyo_docks.png'); background-color: #1a1e29; }
+.bg-phase-2 { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('sendai_skyline.png'); background-color: #22152b; }
+.bg-phase-3 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('deadly_court.png'); background-color: #0d0d0f; }
+
+/* 2D SPRITE WINDOW MATRIX ENGINE */
+.sprite-character {
+    position: absolute;
+    bottom: 32px;
+    width: 110px;
+    height: 140px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: transform 0.1s ease;
+}
+
+.ko-state {
+    filter: grayscale(1) opacity(0.55);
+    transform: scale(0.95);
+}
+
+#ko-banner {
+    position: absolute;
+    inset: 35% 0 auto 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: #ff0055;
+    text-shadow: 0 0 18px #ff0055, 0 0 30px #fff;
+    letter-spacing: 6px;
+    z-index: 20;
+}
+
+/* --- PHASE 1 SPRITE MAPPING: ITADORI VS OKKOTSU --- */
+.player-p1-idle { background-image: url('itadori_idle.png'); transform: scaleX(1); }
+.player-p1-punch { background-image: url('itadori_punch.png'); transform: scaleX(1); }
+.player-p1-kick { background-image: url('itadori_kick.png'); transform: scaleX(1); }
+.enemy-p1-idle { background-image: url('okkotsu_idle.png'); transform: scaleX(-1); }
+.enemy-p1-punch { background-image: url('okkotsu_punch.png'); transform: scaleX(-1); }
+.enemy-p1-kick { background-image: url('okkotsu_kick.png'); transform: scaleX(-1); }
+
+/* --- PHASE 2 SPRITE MAPPING: HAKARI VS KASHIMO --- */
+.player-p2-idle { background-image: url('hakari_idle.png'); transform: scaleX(1); }
+.player-p2-punch { background-image: url('hakari_punch.png'); transform: scaleX(1); }
+.player-p2-kick { background-image: url('hakari_kick.png'); transform: scaleX(1); }
+.enemy-p2-idle { background-image: url('kashimo_idle.png'); transform: scaleX(-1); }
+.enemy-p2-punch { background-image: url('kashimo_punch.png'); transform: scaleX(-1); }
+.enemy-p2-kick { background-image: url('kashimo_kick.png'); transform: scaleX(-1); }
+
+/* --- PHASE 3 SPRITE MAPPING: YUJI VS HIGURUMA --- */
+.player-p3-idle { background-image: url('itadori_idle.png'); transform: scaleX(1); }
+.player-p3-punch { background-image: url('itadori_punch.png'); transform: scaleX(1); }
+.player-p3-kick { background-image: url('itadori_kick.png'); transform: scaleX(1); }
+.enemy-p3-idle { background-image: url('higuruma_idle.png'); transform: scaleX(-1); }
+.enemy-p3-punch { background-image: url('higuruma_punch.png'); transform: scaleX(-1); }
+.enemy-p3-kick { background-image: url('higuruma_kick.png'); transform: scaleX(-1); }
+
+/* COMBAT HIT STATS */
+.enemy-hurt-flash { 
+    animation: pushHurt 0.15s 2; 
+    filter: scaleX(-1) brightness(3) sepia(1) hue-rotate(-50deg); 
+}
+@keyframes pushHurt { 0% { transform: scaleX(-1) translateX(0); } 50% { transform: scaleX(-1) translateX(-15px); } 100% { transform: scaleX(-1) translateX(0); } }
+
+#hit-flash { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); font-family: 'Permanent Marker', cursive; font-size: 2.2rem; color: var(--curse-pink); text-shadow: 0 0 12px #fff; z-index: 10; }
+
+/* CONTROL COMPONENT PANELS */
+#console-controls { height: 110px; background: var(--arcade-gray); border-radius: 8px; border: 2px solid #222; display: flex; padding: 5px 15px; align-items: center; justify-content: space-between; }
+.joystick-wrapper { width: 100px; display: flex; justify-content: center; }
+.dpad { position: relative; width: 70px; height: 70px; }
+.dpad-btn { position: absolute; background: #222; border: 1px solid #3d3d5c; color: #666; font-size: 0.75rem; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+.left { top: 22px; left: 0; width: 32px; height: 26px; }
+.right { top: 22px; right: 0; width: 32px; height: 26px; }
+
+.console-monitor { flex: 1; margin: 0 15px; background: #000; height: 80px; border-radius: 6px; border: 1px solid #222; padding: 10px; display: flex; align-items: center; justify-content: center; }
+#system-log { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; color: #aaa; text-align: center; line-height: 1.4; letter-spacing: 1px; }
+
+.action-buttons-wrapper { width: 130px; }
+.arcade-buttons { display: flex; gap: 12px; justify-content: center; }
+.action-btn { width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 0.55rem; font-weight: bold; color: white; box-shadow: 0 4px 0 #000; }
+.btn-punch { background: var(--curse-pink); border: 2px solid #ff4d88; }
+.btn-kick { background: var(--gold); border: 2px solid #ffe066; color: #000; }
+.action-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #000; }
+
+/*PRESENTATION BOX CONTAINER */
+#birthday-reveal { position: fixed; inset: 0; background: rgba(2, 2, 5, 0.99); z-index: 99999; display: none; align-items: center; justify-content: center; padding: 15px; }
+.domain-shatter-box { background: var(--arcade-gray); border: 3px solid var(--gold); border-radius: 12px; padding: 20px; max-width: 600px; text-align: center; box-shadow: 0 0 40px rgba(255, 204, 0, 0.2); overflow-y: auto; max-height: 95vh; }
+.anime-title { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: var(--curse-pink); margin-bottom: 4px; }
+.gold-subtitle { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--gold); margin-bottom: 15px; letter-spacing: 2px; }
+
+/* SHARP PHOTO FRAME */
+.profile-frame {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 15px auto;
+    border: 3px solid var(--domain-blue);
+    border-radius: 50%;
+    padding: 4px;
+    background: #000;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+.profile-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+
+.blessing-text { font-size: 0.85rem; line-height: 1.6; color: #cdd; margin-bottom: 15px; text-align: justify; }
+.restart-btn { background: transparent; border: 1px solid var(--domain-blue); color: var(--domain-blue); font-family: 'Orbitron', sans-serif; padding: 8px 16px; font-size: 0.7rem; border-radius: 4px; cursor: pointer; }
+
+/* Retry button on battlefield */
+#retry-button { position: absolute; right: 18px; top: 12px; z-index: 30; background: rgba(0,0,0,0.6); border: 1px solid var(--domain-blue); color: var(--domain-blue); padding: 6px 12px; border-radius: 6px; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; cursor: pointer; }
+
+.hidden-element { display: none !important; }
+.hidden-view { display: none !important; }

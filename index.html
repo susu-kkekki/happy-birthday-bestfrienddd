@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JJK: Culling Games // Leago 22</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Permanent+Marker&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://fav.farm/🔥" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="orientation-overlay">
+        <div class="overlay-content">
+            <span class="rotate-icon">🔄</span>
+            <p>ROTATE TO LANDSCAPE TO ENTER THE CULLING GAMES</p>
+        </div>
+    </div>
+
+    <div id="game-container">
+        
+        <header id="game-hud">
+            <div class="hud-block">
+                <span class="label">LEAGO</span>
+                <span id="player-label" class="value">YUJI ITADORI</span>
+                <span id="player-health" class="value">HP: 06</span>
+            </div>
+            <div class="hud-block text-center">
+                <span id="game-alert" class="combo-tracker">PHASE 1: OKKOTSU SHOWDOWN</span>
+            </div>
+            <div class="hud-block text-right">
+                <span class="label">CURSED ENERGY EXPELLED</span>
+                <span id="score-counter" class="score-neon">00 / 22 HIT</span>
+                <span id="enemy-health" class="value">ENEMY HP: 06</span>
+            </div>
+        </header>
+
+        <main id="battle-stage" class="bg-phase-1">
+            <div class="arena-floor"></div>
+            
+            <div id="player-sprite" class="sprite-character player-p1-idle" style="left: 100px;"></div>
+
+            <div id="enemy-sprite" class="sprite-character enemy-p1-idle" style="right: 100px;"></div>
+
+            <div id="hit-flash" class="hidden-element">HIT!</div>
+            <div id="ko-banner" class="hidden-element">K.O.</div>
+            <button id="retry-button" class="restart-btn hidden-element">RETRY</button>
+        </main>
+
+        <footer id="console-controls">
+            
+            <div class="joystick-wrapper">
+                <div class="dpad">
+                    <button class="dpad-btn left" onmousedown="startMove('-')" onmouseup="stopMove()" ontouchstart="startMove('-')" ontouchend="stopMove()">◀</button>
+                    <button class="dpad-btn right" onmousedown="startMove('+')" onmouseup="stopMove()" ontouchstart="startMove('+')" ontouchend="stopMove()">▶</button>
+                </div>
+            </div>
+
+            <div class="console-monitor">
+                <p id="system-log">MATCH START: CLOSE DISTANCE ON OKKOTSU</p>
+            </div>
+
+            <div class="action-buttons-wrapper">
+                <div class="arcade-buttons">
+                    <button class="action-btn btn-punch" onclick="triggerAttack('punch')">PUNCH (A)</button>
+                    <button class="action-btn btn-kick" onclick="triggerAttack('kick')">KICK (B)</button>
+                </div>
+            </div>
+
+        </footer>
+
+        <section id="birthday-reveal" class="hidden-view">
+            <div class="domain-shatter-box">
+                <h1 class="anime-title">ALL MATCHES CLEARED!</h1>
+                <h2 class="gold-subtitle">HAPPY 22ND BIRTHDAY, LEAGO! 🔥</h2>
+                
+                <div class="profile-frame">
+                    <img src="leago.jpeg" alt="Leago's Birthday Portrait" class="profile-image">
+                </div>
+
+                <p class="blessing-text">
+                    Leago, turning 22 is a major milestone, and this new chapter is built on divine purpose. 
+                    Just like an overcomer who pushes through every hurdle and masters every stage, you are fearfully and wonderfully made to conquer every challenge ahead. 
+                    May you walk into this new year with bold faith, divine protection, and absolute peace. 
+                    May every door of opportunity swing wide open for you, and may your steps be ordered toward absolute victory. 
+                    No weapon formed against your destiny can stand in the courtroom of the King.
+                    <br><br>
+                    <strong>I LOVE YOU, LEAGO! ❤️</strong>
+                </p>
+                <button class="restart-btn" onclick="location.reload()">INSERT COIN</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
