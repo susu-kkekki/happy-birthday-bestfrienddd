@@ -54,7 +54,7 @@ body {
 /* 2D SPRITE WINDOW MATRIX ENGINE */
 .sprite-character {
     position: absolute;
-    bottom: 32px;
+    bottom: 8px;
     width: 110px;
     height: 140px;
     background-repeat: no-repeat;
