@@ -38,4 +38,4 @@ The game is based on the Jujutsu Kaisen Season 3 Culling Games. The character sp
 If I missed some details, give me some grace, I don't watch the animè or animè at all. A lot of research went into this and this is the best I could come up with.
 Nevertheless, it was created with so much attention to detail for my animè lover, my baby brother ♥️.
 
-## Ntsako Lydia Mashaba
+~ Ntsako Lydia Mashaba
