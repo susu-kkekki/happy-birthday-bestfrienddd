@@ -1,4 +1,4 @@
-# Leago Birthday Arena
+# Leago's 22nd Birthday Arena
 
 A browser-based mini fighting game built as a birthday surprise. The project includes a stage, health UI, movement and attack controls, and a final reveal screen.
 
@@ -32,4 +32,7 @@ A browser-based mini fighting game built as a birthday surprise. The project inc
 
 ## Credits
 
-Created as a custom birthday project with pixel-style character sprites and animated battle visuals.
+The game is based on the Jujutsu Kaisen Season 3 Culling Games. The character sprites are actual characters from the animè.
+
+## Author
+Created with so much attention detail for my animè lover, my baby brother ♥️.
