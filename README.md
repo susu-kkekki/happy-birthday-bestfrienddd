@@ -35,4 +35,4 @@ A browser-based mini fighting game built as a birthday surprise. The project inc
 The game is based on the Jujutsu Kaisen Season 3 Culling Games. The character sprites are actual characters from the animè.
 
 ## Author
-Created with so much attention detail for my animè lover, my baby brother ♥️.
+Created with so much to attention detail for my animè lover, my baby brother ♥️.
